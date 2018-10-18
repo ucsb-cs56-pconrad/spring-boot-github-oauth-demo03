@@ -1,3 +1,11 @@
+
+*~
+
+# Don't store keystore files
+*.jks
+
+app.json
+secrets.json
 .classpath
 .project
 .settings/
