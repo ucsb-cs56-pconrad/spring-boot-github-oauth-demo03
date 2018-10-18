@@ -1,3 +1,9 @@
+# <https://github.com/pconrad/try2-pac4j-sb-oauth>
+
+Based on code from: <https://github.com/pac4j/spring-webmvc-pac4j-boot-demo>
+
+# Original README contents:
+
 <p align="center">
   <img src="https://pac4j.github.io/pac4j/img/logo-spring-webmvc.png" width="300" />
 </p>
