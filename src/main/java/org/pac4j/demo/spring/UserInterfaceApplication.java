@@ -91,35 +91,11 @@ public class UserInterfaceApplication {
         return protectedIndex(map);
     }
 
-    @RequestMapping("/twitter/index.html")
-    public String twitter(final Map<String, Object> map) {
+    @RequestMapping("/github/index.html")
+    public String github(final Map<String, Object> map) {
         return protectedIndex(map);
     }
 
-    @RequestMapping("/form/index.html")
-    public String form(final Map<String, Object> map) {
-        return protectedIndex(map);
-    }
-
-    @RequestMapping("/basicauth/index.html")
-    public String basicauth(final Map<String, Object> map) {
-        return protectedIndex(map);
-    }
-
-    @RequestMapping("/cas/index.html")
-    public String cas(final Map<String, Object> map) {
-        return protectedIndex(map);
-    }
-
-    @RequestMapping("/saml/index.html")
-    public String saml(final Map<String, Object> map) {
-        return protectedIndex(map);
-    }
-
-    @RequestMapping("/oidc/index.html")
-    public String oidc(final Map<String, Object> map) {
-        return protectedIndex(map);
-    }
 
     @RequestMapping("/protected/index.html")
     public String protect(final Map<String, Object> map) {
