@@ -1,27 +1,19 @@
-<h1>index</h1>
+<h1>Index</h1>
 
-<a href="/facebook/index.html">Protected url by Facebook: facebook/index.html</a> (use a real account)<br />
+<table>
+  <tr><th>Link</th><th>Explanation</th></tr>
+  <tr><td><a href="/github/index.html">/github/index.html</a></td><td>tbd</td></tr>
+  <tr><td><a href="/protected/index.html">/protected/index.html</a></td><td>tbd</td></tr>
+  <tr><td><a href="/forceLogin?client_name=GitHubClient">forceLogin?client_name=GitHubClient</a></td><td>tbd</td></tr>
+  <tr><td><a href="/logout?url=/?forcepostlogouturl">/logout?url=/?forcepostlogouturl</a></td><td>local logout</td></tr>
+  <tr><td><a href="/centralLogout?url=https://127.0.0.1:8082/?forcepostlogouturlafteridp">/centralLogout?url=https://127.0.0.1:8082/?forcepostlogouturlafteridp</a></td><td>central logout</td></tr>
+</table>
 
-<a href="facebook/notprotected.html">Not protected page: facebook/notprotected.html</a> (no authentication required)<br />
 
-<a href="/facebookadmin/index.html">Protected url by Facebook with ROLE_ADMIN: facebookadmin/index.html</a> (use a real account)<br />
+<table>
+  <tr><th>profiles</th><td> {{profiles}}</td></tr>
+  <tr><th>sessionId</th><td> {{sessionId}}</td></tr>
+</table>
 
-<a href="/facebookcustom/index.html">Protected url by Facebook with custom authorizer (= must be a <em>CommonProfile</em> where the username starts with "pconrad"): facebookcustom/index.html</a> 
 
-<a href="/github/index.html">Protected url by Github: github/index.html</a>
 
-<a href="/protected/index.html">Protected url: protected/index.html</a><br />
-<br />
-
-<a href="forceLogin?client_name=FacebookClient">Force Facebook login</a> (even if already authenticated)<br />
-<br />
-
-<a href="logout?url=/?forcepostlogouturl">local logout</a><br/>
-
-<br />
-<a href="centralLogout?url=https://127.0.0.1:8082/?forcepostlogouturlafteridp">central logout</a>
-
-<br /><br />
-profiles: {{profiles}}<br />
-<br />
-sessionId: {{sessionId}}
