@@ -21,11 +21,9 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SecurityInterceptor(config, "FacebookClient")).addPathPatterns("/facebook/*").excludePathPatterns("/facebook/notprotected.html");
-        //registry.addInterceptor(new SecurityInterceptor(config, "FacebookClient", "admin")).addPathPatterns("/facebookadmin/*");
-        registry.addInterceptor(new SecurityInterceptor(config, "FacebookClient")).addPathPatterns("/facebookadmin/*");
-        registry.addInterceptor(new SecurityInterceptor(config, "FacebookClient", "custom")).addPathPatterns("/facebookcustom/*");
-        registry.addInterceptor(new SecurityInterceptor(config, "GitHubClient,FacebookClient")).addPathPatterns("/github/*");
+        registry.addInterceptor(new SecurityInterceptor(config, "GitHubClient", "admin")).addPathPatterns("/admin/*");
+		registry.addInterceptor(new SecurityInterceptor(config, "GitHubClient", "custom")).addPathPatterns("/custom/*");
+        registry.addInterceptor(new SecurityInterceptor(config, "GitHubClient")).addPathPatterns("/github/*");
         registry.addInterceptor(new SecurityInterceptor(config)).addPathPatterns("/protected/*");
     }
 }

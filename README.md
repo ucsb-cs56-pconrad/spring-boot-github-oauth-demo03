@@ -3,6 +3,10 @@
 Based on code from: <https://github.com/pac4j/spring-webmvc-pac4j-boot-demo>
 
 
+# Configuring the KeyStore
+
+<http://pconrad-webapps.github.io/topics/spring_boot_https/>
+
 # Useful resources:
 
 * <https://www.pac4j.org/docs/clients.html#3-the-callback-url>

@@ -69,30 +69,21 @@ public class UserInterfaceApplication {
         return "index";
     }
 
-    @RequestMapping("/facebook/index.html")
-    public String facebook(final Map<String, Object> map) {
-        return protectedIndex(map);
-    }
-
-    @RequestMapping("/facebook/notprotected.html")
-    public String facebookNotProtected(final Map<String, Object> map) {
-        map.put("profiles", uiSecurityHelper.getProfiles());
-        return "notProtected";
-    }
-
-    @RequestMapping("/facebookadmin/index.html")
-    @RequireAnyRole("ROLE_ADMIN")
-    public String facebookadmin(final Map<String, Object> map) {
-        return protectedIndex(map);
-    }
-
-    @RequestMapping("/facebookcustom/index.html")
-    public String facebookcustom(final Map<String, Object> map) {
-        return protectedIndex(map);
-    }
-
     @RequestMapping("/github/index.html")
     public String github(final Map<String, Object> map) {
+        return protectedIndex(map);
+    }
+
+
+    @RequestMapping("/admin/index.html")
+    @RequireAnyRole("ROLE_ADMIN")
+    public String github_admin(final Map<String, Object> map) {
+        return protectedIndex(map);
+    }
+
+	
+    @RequestMapping("/custom/index.html")
+    public String github_custom(final Map<String, Object> map) {
         return protectedIndex(map);
     }
 
@@ -100,13 +91,6 @@ public class UserInterfaceApplication {
     @RequestMapping("/protected/index.html")
     public String protect(final Map<String, Object> map) {
         return protectedIndex(map);
-    }
-
-    @RequestMapping("/loginForm")
-    public String loginForm(final  Map<String, Object> map) {
-        final FormClient formClient = (FormClient) config.getClients().findClient("FormClient");
-        map.put("callbackUrl", formClient.getCallbackUrl());
-        return "form";
     }
 
     @RequestMapping("/forceLogin")
