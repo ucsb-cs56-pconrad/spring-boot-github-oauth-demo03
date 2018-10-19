@@ -33,7 +33,8 @@ public class CustomAuthorizer extends ProfileAuthorizer<CommonProfile> {
         if (profile == null) {
             return false;
         }
+		
 		// NOTE: THIS IS WHERE YOU HARD CODE A PARTICULAR USERNAME...
-        return StringUtils.startsWith(profile.getUsername(), "pconrad");
+        return ( profile.getUsername().equals("bnieder") || Pac4jConfig.isAdmin(profile) );
     }
 }
