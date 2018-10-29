@@ -1,6 +1,9 @@
-# <https://github.com/pconrad/try2-pac4j-sb-oauth>
+# <https://github.com/pconrad/spring-boot-github-oauth-take3>
+ 
 
-Based on code from: <https://github.com/pac4j/spring-webmvc-pac4j-boot-demo>
+Based on code from:
+* <https://github.com/pac4j/spring-webmvc-pac4j-boot-demo>
+* <https://github.com/pconrad/try2-pac4j-sb-oauth>
 
 
 # Configuring the KeyStore
