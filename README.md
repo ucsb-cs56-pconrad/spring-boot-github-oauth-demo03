@@ -1,7 +1,24 @@
 # <https://github.com/pconrad/spring-boot-github-oauth-take3>
  
+# To run locally:
 
-Based on code from:
+1. If you want to be able to test on localhost with https, configure the key store.  
+   * This is a self-signed certificate, and does NOT offer security; it is only for testing purposes
+   * Run this:
+      ```
+      cd src/main/resources
+      keytool -genkey -alias mydomain -keyalg RSA -keystore KeyStore.jks -keysize 2048
+      ```
+   * Use `password` as the password (or else change the hardcoded value `password` in the file `src/main/resources/application.properties`
+   
+2. Create a Github OAuth app to get the client-id and client-secret values, and put those values into app.json
+3. Run `. env.sh`
+4. Run `mvn spring-boot:run`
+
+Ignore the errors about MongoDB... there is something that is trying to start up that we need to disable...
+
+# Based on code from:
+
 * <https://github.com/pac4j/spring-webmvc-pac4j-boot-demo>
 * <https://github.com/pconrad/try2-pac4j-sb-oauth>
 
