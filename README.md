@@ -10,11 +10,18 @@
       keytool -genkey -alias mydomain -keyalg RSA -keystore KeyStore.jks -keysize 2048
       ```
    * Use `password` as the password (or else change the hardcoded value `password` in the file `src/main/resources/application.properties`
+<<<<<<< Updated upstream
    * For all the other values, you can just take the defaults (except you have to answer "yes" to the question 
        where it asks you if the values are correct.)
    
 2. Create a Github OAuth app to get the client-id and client-secret values, and put those values into `app.json`.  This
    guide may be of help, except that the callback url needs to be  `https://localhost:8082`
+=======
+
+2. Copy from `app.json.EXAMPLE` to `app.json` which is in the `.gitignore` file (or should be).
+2. Create a Github OAuth app to get the client-id and client-secret values, and put those values into `app.json`
+   * For details, see: <>
+>>>>>>> Stashed changes
 3. Run `. env.sh`
 4. Run `mvn spring-boot:run`
 
