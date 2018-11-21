@@ -1,4 +1,4 @@
-# <https://github.com/pconrad/spring-boot-github-oauth-take3>
+# spring-boot-oauth-demo01
  
 # To run locally:
 
