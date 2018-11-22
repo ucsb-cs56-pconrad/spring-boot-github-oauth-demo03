@@ -110,6 +110,12 @@ public class Pac4jConfig {
         final GitHubClient ghClient =
 			new GitHubClient(github_client_id, github_client_secret);
 
+		for (int i=1; i<=5; i++)
+			logger.info("******************************************");
+		logger.info("github_client_id ="+ github_client_id);
+		logger.info("github_client_secret ="+ github_client_secret);				
+
+		
 		// https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/
 		ghClient.setScope("read:org");
 

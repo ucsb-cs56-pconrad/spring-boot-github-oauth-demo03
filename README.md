@@ -1,28 +1,43 @@
 # spring-boot-oauth-demo01
- 
+
+This is a demo of an application that illustrates
+OAuth with spring boot.
+
+The configuration steps need to be followed VERY CAREFULLY
+or it will not work.
+
+
 # To run locally:
 
 1. If you want to be able to test on localhost with https, configure the key store.  
    * This is a self-signed certificate, and does NOT offer security; it is only for testing purposes
-   * Run this:
+   * When running with `https` with a self-signed certificate, you will
+      likely get browser warnings that the site may be unsafe.  It is ok
+      to proceed to the site in spite of these warnings.
+   * Run this, noting how to respond to the prompts below:
       ```
       cd src/main/resources
       keytool -genkey -alias mydomain -keyalg RSA -keystore KeyStore.jks -keysize 2048
       ```
-   * Use `password` as the password (or else change the hardcoded value `password` in the file `src/main/resources/application.properties`
-<<<<<<< Updated upstream
-   * For all the other values, you can just take the defaults (except you have to answer "yes" to the question 
-       where it asks you if the values are correct.)
-   
-2. Create a Github OAuth app to get the client-id and client-secret values, and put those values into `app.json`.  This
-   guide may be of help, except that the callback url needs to be  `https://localhost:8082`
-=======
+      * Use `password` as the password (or else change the hardcoded value `password` in the file `src/main/resources/application.properties`
 
-2. Copy from `app.json.EXAMPLE` to `app.json` which is in the `.gitignore` file (or should be).
-2. Create a Github OAuth app to get the client-id and client-secret values, and put those values into `app.json`
-   * For details, see: <>
->>>>>>> Stashed changes
+      * For all the other values, you can just take the defaults (except you have to answer "yes" to the question where it asks you if the values are correct.)
+   
+2. Create a Github OAuth app to get the client-id and client-secret values, and put those values into `app.json`.  To create a Github OAuth app:
+   * Login to Github, and go to Settings under your personal account
+   * Navigate to Developer Settings (Or just go to: <https://github.com/settings/developers>)
+   * Click the "New OAuth App" button
+   * Give the app a name that matches your repo name, plus "test on localhost" (for example `GauchoTool test on localhost`).  It is not required that this name match exactly, but you will *want to be able to find it later* to be sure that you are debugging the settings of the correct app
+   * For `Homepage URL` enter `https://127.0.0.1:8082`
+   * For `Application description`, you may put in anything you want.
+   * For `Authorization callback URL` you must put in this.  Be sure it matches *exactly*, including upper/lower case: `https://127.0.0.1:8082/callback?client_name=GitHubClient`
+   * Click `Register Application`
+   * Now you have the `Client ID` and `Client Secret` values you need for the next step.
+3. Copy from `app.json.EXAMPLE` to `app.json` which is in the `.gitignore` file (or should be), and carefully edit the `Client ID` and `Client Secret` into the `app.json` version.
 3. Run `. env.sh`
+   * This defines the environment variable `SPRING_APPLICATION_JSON` which is
+      an environment variable that can override application setting values
+      in the `src/main/resources/application.properties` file.
 4. Run `mvn spring-boot:run`
 
 Ignore the errors about MongoDB... there is something that is trying to start up that we need to disable...

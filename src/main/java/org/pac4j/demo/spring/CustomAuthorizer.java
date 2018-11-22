@@ -31,10 +31,11 @@ public class CustomAuthorizer extends ProfileAuthorizer<CommonProfile> {
         logger.info("An INFO Message... profile.getUsername()="+profile.getUsername());
 		
         if (profile == null) {
+			logger.info("PROFILE WAS NULL!!!!!!!");
             return false;
         }
 		
 		// NOTE: THIS IS WHERE YOU HARD CODE A PARTICULAR USERNAME...
-        return ( profile.getUsername().equals("bnieder") || Pac4jConfig.isAdmin(profile) );
+        return ( profile.getUsername().equals("pconrad") || Pac4jConfig.isAdmin(profile) );
     }
 }
