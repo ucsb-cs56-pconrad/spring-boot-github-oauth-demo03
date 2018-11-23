@@ -1,10 +1,16 @@
 package org.pac4j.demo.spring;
 
+
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.pac4j.core.client.Client;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.context.J2EContext;
 import org.pac4j.core.context.Pac4jConstants;
 import org.pac4j.core.exception.HttpAction;
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.http.client.indirect.FormClient;
 import org.pac4j.springframework.annotation.ui.RequireAnyRole;
 import org.pac4j.springframework.helper.UISecurityHelper;
@@ -12,15 +18,11 @@ import org.pac4j.springframework.web.LogoutController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.util.Map;
 
 @Controller
 public class UserInterfaceApplication {
@@ -57,40 +59,53 @@ public class UserInterfaceApplication {
     }
 
     @RequestMapping("/")
-    public String root(final Map<String, Object> map) throws HttpAction {
-        return index(map);
+    public String root(Model model) throws HttpAction {
+        return index(model);
     }
 
-    @RequestMapping("/index.html")
-    public String index(final Map<String, Object> map) throws HttpAction {
-        map.put("profiles", uiSecurityHelper.getProfiles());
-        final J2EContext context = uiSecurityHelper.getJ2EContext();
-        map.put("sessionId", context.getSessionStore().getOrCreateSessionId(context));
+	public void setAttributes(Model model) {
+		List<CommonProfile> profiles = uiSecurityHelper.getProfiles();
+		model.addAttribute("profiles",profiles);
+		model.addAttribute("profiles_s",profiles.toString());
+
+		final J2EContext context = uiSecurityHelper.getJ2EContext();
+		String sessionID =
+			context
+			.getSessionStore()
+			.getOrCreateSessionId(context);
+        model.addAttribute("sessionId",sessionID);
+	}
+	  
+	
+	@RequestMapping("/index.html")
+    public String index(Model model) throws HttpAction {
+		setAttributes(model);
         return "index";
     }
 
+
     @RequestMapping("/github/index.html")
-    public String github(final Map<String, Object> map) {
-        return protectedIndex(map);
+    public String github(Model model) {
+        return protectedIndex(model);
     }
 
 
     @RequestMapping("/admin/index.html")
     @RequireAnyRole("ROLE_ADMIN")
-    public String github_admin(final Map<String, Object> map) {
-        return protectedIndex(map);
+    public String github_admin(Model model) {
+        return protectedIndex(model);
     }
 
 	
     @RequestMapping("/custom/index.html")
-    public String github_custom(final Map<String, Object> map) {
-        return protectedIndex(map);
+    public String github_custom(Model model) {
+        return protectedIndex(model);
     }
 
 
     @RequestMapping("/protected/index.html")
-    public String protect(final Map<String, Object> map) {
-        return protectedIndex(map);
+    public String protect(Model model) {
+        return protectedIndex(model);
     }
 
     @RequestMapping("/forceLogin")
@@ -103,8 +118,8 @@ public class UserInterfaceApplication {
         }
     }
 
-    protected String protectedIndex(final Map<String, Object> map) {
-        map.put("profiles", uiSecurityHelper.getProfiles());
+    protected String protectedIndex(Model model) {
+		setAttributes(model);
         return "protectedIndex";
     }
 
