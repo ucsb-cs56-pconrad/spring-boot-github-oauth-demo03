@@ -56,10 +56,20 @@ Ignore the errors about MongoDB... there is something that is trying to start up
 
 ## `CustomAuthorizer.java`
 
-`CustomAuthorizer` is a class that extends `ProfileAuthorizer<CommonProfile>`.
+`CustomAuthorizer` is a class that extends `ProfileAuthorizer<CommonProfile>`, which is an abstract class.
 
-See: [ProfileAuthorizer javadoc](http://static.javadoc.io/org.pac4j/pac4j-core/1.9.0/org/pac4j/core/authorization/authorizer/ProfileAuthorizer.html)
+The single abstract method of that class is:  
 
+`protected abstract boolean	isProfileAuthorized(WebContext context, U profile)`
+
+which is supposed to return true or false based on "whether a specific profile is authorized".
+
+In this context, `CommonProfile` means the information associated with a given user that we have authenticated; and 
+the `CommonProfile` is information we can get about a user regardless of which login method that used (i.e. whether its Github, or Facebook, or Google, or whatever.)
+
+See:
+* [`ProfileAuthorizer` javadoc](http://static.javadoc.io/org.pac4j/pac4j-core/1.9.0/org/pac4j/core/authorization/authorizer/ProfileAuthorizer.html)
+* [`CommonProfile` javadoc](http://static.javadoc.io/org.pac4j/pac4j-core/1.9.0/org/pac4j/core/profile/CommonProfile.html)
 
 
 # Useful resources:
