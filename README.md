@@ -52,6 +52,16 @@ Ignore the errors about MongoDB... there is something that is trying to start up
 
 <http://pconrad-webapps.github.io/topics/spring_boot_https/>
 
+# The Codes
+
+## `CustomAuthorizer.java`
+
+`CustomAuthorizer` is a class that extends `ProfileAuthorizer<CommonProfile>`.
+
+See: [ProfileAuthorizer javadoc](http://static.javadoc.io/org.pac4j/pac4j-core/1.9.0/org/pac4j/core/authorization/authorizer/ProfileAuthorizer.html)
+
+
+
 # Useful resources:
 
 * <https://www.pac4j.org/docs/clients.html#3-the-callback-url>
