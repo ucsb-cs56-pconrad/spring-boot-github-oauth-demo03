@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CustomAuthorizer extends ProfileAuthorizer<CommonProfile> {
 
-
+   
 	private Logger logger = LoggerFactory.getLogger(CustomAuthorizer.class);
 	
     @Override
@@ -25,17 +25,16 @@ public class CustomAuthorizer extends ProfileAuthorizer<CommonProfile> {
     @Override
     public boolean isProfileAuthorized(final WebContext context,
 				       final CommonProfile profile) {
-
-		logger.trace("A TRACE Message");
-        logger.debug("A DEBUG Message");
-        logger.info("An INFO Message... profile.getUsername()="+profile.getUsername());
-		
         if (profile == null) {
 			logger.info("PROFILE WAS NULL!!!!!!!");
             return false;
-        }
+        } 
+		logger.info("profile.getUsername()="+profile.getUsername());
 		
-		// NOTE: THIS IS WHERE YOU HARD CODE A PARTICULAR USERNAME...
-        return ( profile.getUsername().equals("pconrad") || Pac4jConfig.isAdmin(profile) );
+		// NOTE: THIS IS WHERE YOU hard code the criteria you want
+		// in terms of who is authorized to access your application
+		
+        return ( profile.getUsername().equals("pconrad") ||
+				 Pac4jConfig.isAdmin(profile) );
     }
 }
