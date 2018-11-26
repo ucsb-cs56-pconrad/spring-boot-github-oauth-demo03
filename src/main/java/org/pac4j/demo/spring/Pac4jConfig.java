@@ -67,9 +67,14 @@ public class Pac4jConfig {
 
 		AuthorizationGenerator<GitHubProfile> authGen = (ctx, profile) -> {
 			if (CustomAdmin.isAdmin(profile)) {
-				profile.addRole(CustomAdmin.roleName);
+				profile.addRole(CustomAdmin.adminRoleName);
 				logger.info("added role "
-							+ CustomAdmin.roleName + " to pac4j profile");
+							+ CustomAdmin.adminRoleName + " to pac4j profile");
+			}
+			if (CustomAdmin.isMember(profile)) {
+				profile.addRole(CustomAdmin.memberRoleName);
+				logger.info("added role "
+							+ CustomAdmin.memberRoleName + " to pac4j profile");
 			}
 			return profile;
 		};
@@ -90,11 +95,13 @@ public class Pac4jConfig {
         final Config config = new Config(clients);
 		
 		RequireAnyRoleAuthorizer adminAuthorizer =
-			new RequireAnyRoleAuthorizer(CustomAdmin.roleName);
+			new RequireAnyRoleAuthorizer(CustomAdmin.adminRoleName);
 		config.addAuthorizer("admin",adminAuthorizer);
 
-		// CustomAuthorizer is defined in its own class of our making
-        config.addAuthorizer("custom", new CustomAuthorizer());
+		RequireAnyRoleAuthorizer memberAuthorizer =
+			new RequireAnyRoleAuthorizer(CustomAdmin.memberRoleName);
+		config.addAuthorizer("member",memberAuthorizer);
+
         return config;
     }
 }

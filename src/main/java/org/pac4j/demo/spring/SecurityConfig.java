@@ -22,7 +22,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 		
-		// The roles "admin" and "custom" are defined in
+		// The roles "admin" and "member" are defined in
 		// Pac4JConfig.java.   This code should probably be refactored
 		// so that this is less scattered across multiple source files
 		
@@ -30,7 +30,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 			new SecurityInterceptor(config, "GitHubClient", "admin");	    
 		registry.addInterceptor(gh_admin).addPathPatterns("/admin/*");
 		SecurityInterceptor gh_custom =
-			new SecurityInterceptor(config, "GitHubClient", "custom");	    
+			new SecurityInterceptor(config, "GitHubClient", "member");	    
 		registry.addInterceptor(gh_admin).addPathPatterns("/custom/*");
 
 		SecurityInterceptor gh_loggedIn =
