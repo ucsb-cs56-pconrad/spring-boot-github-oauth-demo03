@@ -40,7 +40,6 @@ or it will not work.
       in the `src/main/resources/application.properties` file.
 4. Run `mvn spring-boot:run`
 
-Ignore the errors about MongoDB... there is something that is trying to start up that we need to disable...
 
 # Based on code from:
 
@@ -71,6 +70,54 @@ See:
 * [`ProfileAuthorizer` javadoc](http://static.javadoc.io/org.pac4j/pac4j-core/1.9.0/org/pac4j/core/authorization/authorizer/ProfileAuthorizer.html)
 * [`CommonProfile` javadoc](http://static.javadoc.io/org.pac4j/pac4j-core/1.9.0/org/pac4j/core/profile/CommonProfile.html)
 
+One way we can define who is authorized is to check for a specific
+username, or list of usernames that we could hard code.  Another way
+is to base it on whether a user is an "admin", and we can define who is
+an admin in a separate file, namely: xxx.
+
+## `EmbeddedTomcat.java`
+
+
+This file allows the configuration
+of the "Embedded Tomcat" container (a Java Servlet Container) that is
+part of the Spring framework.   The "Servlet Container" is the piece
+of software that acts as the webserver when you run a Java http backend.
+
+To be perfectly honest: I've forgotten why this file was needed for
+this particular demo.
+It may be the case that this is needed when we are running `https` on
+localhost.   It isn't clear whether it's needed when we run on Heroku,
+or even if its needed at all.  More research on that would be helpful.
+
+## `MyErrorController.java`
+
+This file simply allows us to customize the pages that show up when various kinds of errors occur, such as:
+
+* `401 Unauthorized`
+* `403 Forbidden`
+* `404 Not Found`
+* `500 Internal Server Error`
+
+There are many other errors, and it would not be reasonable to create
+custom pages for each one.  (See, for example: <https://www.restapitutorial.com/httpstatuscodes.html>.   We may not even need that here, and it might
+be better to remove this from the tutorial to simplify it.  Maybe that goes
+better in its own tutorial.
+
+## `Pac4jConfig.java`
+
+tbd
+
+## `SecurityConfig.java`
+
+tbd
+
+## `SpringBootPac4jDemo.java`
+
+tbd
+
+## `UserInterfaceApplication.java`
+
+tbd
 
 # Useful resources:
 
