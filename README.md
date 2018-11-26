@@ -53,18 +53,32 @@ or it will not work.
 
 # The Codes
 
+## `CustomAdmin.java`
+
+This class has one job, which is to define a method `isAdmin` that
+determines, based on a user's profile whether we should consider them
+an `admin` or not.   The code here looks at whether the user has the `admin`
+role in a particular Github Organization that we've hard coded
+(later, we should make this come from a configuration variable).
+
 ## `CustomAuthorizer.java`
 
 `CustomAuthorizer` is a class that extends `ProfileAuthorizer<CommonProfile>`, which is an abstract class.
 
 The single abstract method of that class is:  
 
-`protected abstract boolean	isProfileAuthorized(WebContext context, U profile)`
+```
+   protected abstract boolean
+   isProfileAuthorized(WebContext context, U profile)
+```
 
 which is supposed to return true or false based on "whether a specific profile is authorized".
 
-In this context, `CommonProfile` means the information associated with a given user that we have authenticated; and 
-the `CommonProfile` is information we can get about a user regardless of which login method that used (i.e. whether its Github, or Facebook, or Google, or whatever.)
+In this context, `CommonProfile` means the information associated with
+a given user that we have authenticated; and the `CommonProfile` is
+information we can get about a user regardless of which login method
+that used (i.e. whether its Github, or Facebook, or Google, or
+whatever.)
 
 See:
 * [`ProfileAuthorizer` javadoc](http://static.javadoc.io/org.pac4j/pac4j-core/1.9.0/org/pac4j/core/authorization/authorizer/ProfileAuthorizer.html)
@@ -105,11 +119,56 @@ better in its own tutorial.
 
 ## `Pac4jConfig.java`
 
-tbd
+This file does a lot of work; it probably violates the Single Responsibility Principle.    Here are a few things it does:
+
+* It gets the values of the `github_client_id and `github_client_secret` and
+   sets up the `GitHubClient` object used for OAuth Authentication.
+* It sets up the scope for the GitHubClient.
+* It sets up two custom roles, `admin` and `custom`
+* It sets up a custom function to decide what it means to be an `admin` user
+   which we've defined as "being an admin user in the `ucsb-cs56-f18` github
+   organization" (currently hard coded--that should be refactored)
+
 
 ## `SecurityConfig.java`
 
-tbd
+In this file, we configure the url patterns that need to be authenticated
+before they may be accessed.  For example, in the method
+`addInterceptors`, we find this code:
+
+
+```
+SecurityIntercepter gh_admin =
+	new SecurityInterceptor(config, "GitHubClient", "admin");	    
+registry.addInterceptor(gh_admin).addPathPatterns("/admin/*");
+```
+
+This sets up a security intercepter that requires us to be logged
+into github in an admin role.  What "admin" role is defined in
+Pac4JConfig.java (which may not be the best place for it, as
+we've discussed.)
+
+Similarly, we have a custom role defined and we can restrict
+certain URL patterns to that role as well, and finally restrict
+some pages to only be available to when users are logged in:
+
+```
+SecurityIntercepter gh_custom =
+	new SecurityInterceptor(config, "GitHubClient", "custom");	    
+registry.addInterceptor(gh_admin).addPathPatterns("/custom/*");
+
+SecurityIntercepter gh_loggedIn =
+	new SecurityInterceptor(config, "GitHubClient");	    
+registry.addInterceptor(gh_admin).addPathPatterns("/github/*");
+		
+```
+
+This file extends `WebMvcConfigurerAdapter`
+* [`WebMvcConfigurerAdapter` javadoc](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/WebMvcConfigurerAdapter.html)
+* import statement:
+   ```
+   import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+   ```
 
 ## `SpringBootPac4jDemo.java`
 

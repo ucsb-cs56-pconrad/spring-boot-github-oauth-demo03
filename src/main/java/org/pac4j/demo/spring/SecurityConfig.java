@@ -21,9 +21,29 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SecurityInterceptor(config, "GitHubClient", "admin")).addPathPatterns("/admin/*");
-		registry.addInterceptor(new SecurityInterceptor(config, "GitHubClient", "custom")).addPathPatterns("/custom/*");
-        registry.addInterceptor(new SecurityInterceptor(config, "GitHubClient")).addPathPatterns("/github/*");
-        registry.addInterceptor(new SecurityInterceptor(config)).addPathPatterns("/protected/*");
+		
+		// The roles "admin" and "custom" are defined in
+		// Pac4JConfig.java.   This code should probably be refactored
+		// so that this is less scattered across multiple source files
+		
+		SecurityInterceptor gh_admin =
+			new SecurityInterceptor(config, "GitHubClient", "admin");	    
+		registry.addInterceptor(gh_admin).addPathPatterns("/admin/*");
+		SecurityInterceptor gh_custom =
+			new SecurityInterceptor(config, "GitHubClient", "custom");	    
+		registry.addInterceptor(gh_admin).addPathPatterns("/custom/*");
+
+		SecurityInterceptor gh_loggedIn =
+			new SecurityInterceptor(config, "GitHubClient");	    
+		registry.addInterceptor(gh_admin).addPathPatterns("/github/*");
+
+
+		// TODO: find out the difference between gh_loggedIn and
+		// loggedIn.  Maybe that's only a difference if/when there
+		// are multiple ways to login
+		
+		SecurityInterceptor loggedIn =
+			new SecurityInterceptor(config);	    
+		registry.addInterceptor(loggedIn).addPathPatterns("/protected/*");
     }
 }

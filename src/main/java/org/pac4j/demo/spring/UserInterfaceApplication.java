@@ -1,6 +1,7 @@
 package org.pac4j.demo.spring;
 
 
+
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.pac4j.core.client.Client;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.context.J2EContext;
 import org.pac4j.core.context.Pac4jConstants;
+import org.pac4j.core.context.session.SessionStore;
 import org.pac4j.core.exception.HttpAction;
 import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.http.client.indirect.FormClient;
@@ -22,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 
 @Controller
@@ -69,10 +72,8 @@ public class UserInterfaceApplication {
 		model.addAttribute("profiles_s",profiles.toString());
 
 		final J2EContext context = uiSecurityHelper.getJ2EContext();
-		String sessionID =
-			context
-			.getSessionStore()
-			.getOrCreateSessionId(context);
+		SessionStore<J2EContext> ss = context.getSessionStore();
+		String sessionID = ss.getOrCreateSessionId(context);
         model.addAttribute("sessionId",sessionID);
 	}
 	  

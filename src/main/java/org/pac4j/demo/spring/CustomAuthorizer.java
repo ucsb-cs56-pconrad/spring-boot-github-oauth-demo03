@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class CustomAuthorizer extends ProfileAuthorizer<CommonProfile> {
-
    
 	private Logger logger = LoggerFactory.getLogger(CustomAuthorizer.class);
 	
@@ -35,6 +34,9 @@ public class CustomAuthorizer extends ProfileAuthorizer<CommonProfile> {
 		// in terms of who is authorized to access your application
 		
         return ( profile.getUsername().equals("pconrad") ||
-				 Pac4jConfig.isAdmin(profile) );
+				 CustomAdmin.isAdmin(profile) );
     }
+
+
+	
 }
