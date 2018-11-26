@@ -29,13 +29,13 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 		SecurityInterceptor gh_admin =
 			new SecurityInterceptor(config, "GitHubClient", "admin");	    
 		registry.addInterceptor(gh_admin).addPathPatterns("/admin/*");
-		SecurityInterceptor gh_custom =
+		SecurityInterceptor gh_member =
 			new SecurityInterceptor(config, "GitHubClient", "member");	    
-		registry.addInterceptor(gh_admin).addPathPatterns("/custom/*");
+		registry.addInterceptor(gh_member).addPathPatterns("/member/*");
 
 		SecurityInterceptor gh_loggedIn =
 			new SecurityInterceptor(config, "GitHubClient");	    
-		registry.addInterceptor(gh_admin).addPathPatterns("/github/*");
+		registry.addInterceptor(gh_loggedIn).addPathPatterns("/github/*");
 
 
 		// TODO: find out the difference between gh_loggedIn and

@@ -15,7 +15,7 @@
       <tr><td><a href="/index.html">/index.html</a></td><td>&nbsp;</td></tr>
       <tr><td><a href="/github/index.html">/github/index.html</a></td><td>github index</td></tr>
       <tr><td><a href="/admin/index.html">/admin/index.html</a></td><td>admin index</td></tr>
-      <tr><td><a href="/custom/index.html">/custom/index.html</a></td><td>custom</td></tr>
+      <tr><td><a href="/member/index.html">/member/index.html</a></td><td>member</td></tr>
       <tr><td><a href="/protected/index.html">/protected/index.html</a></td><td>protected index</td></tr>
       <tr><td><a href="/forceLogin?client_name=GitHubClient">/forceLogin?client_name=GitHubClient"</a></td><td>force login</td></tr>
       <tr><td><a href="/logout">/logout</a></td><td>local logout</td></tr>

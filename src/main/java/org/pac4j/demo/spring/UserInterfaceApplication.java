@@ -98,8 +98,8 @@ public class UserInterfaceApplication {
     }
 
 	
-    @RequestMapping("/custom/index.html")
-    public String github_custom(Model model) {
+    @RequestMapping("/member/index.html")
+    public String github_member(Model model) {
         return protectedIndex(model);
     }
 
