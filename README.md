@@ -13,6 +13,9 @@ The configuration steps need to be followed VERY CAREFULLY or it will not work.
 
 ## Running on localhost with https
 
+NOTE: If you are running Java version 11 on your machine, you will have trouble with this version 
+of the app.  Instead, use this version: TBD
+
 1. If you want to be able to test on localhost with https, configure the key store.  
    * This is a self-signed certificate, and does NOT offer security; it is only for testing purposes
    * When running with `https` with a self-signed certificate, you will
