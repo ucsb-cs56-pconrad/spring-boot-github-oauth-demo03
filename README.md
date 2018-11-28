@@ -13,7 +13,7 @@ The configuration steps need to be followed VERY CAREFULLY or it will not work.
 
 ## Running on localhost with https
 
-NOTE:** If you are running *Java version 11** on your machine, you will have trouble with this version 
+NOTE: **If you are running *Java version 11** on your machine, you will have trouble with this version 
 of the app.  Instead, use this version: <https://github.com/ucsb-cs56-f18/spring-boot-github-oauth-demo02-java11>
 
 You can check your java version via `javac -version`
