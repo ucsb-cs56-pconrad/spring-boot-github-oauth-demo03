@@ -154,6 +154,10 @@ But there are some things you DO have to do.
 5.  You need some code that sets up the URLs in your application with various
    levels of permission.
 
+   This is done in the file `SecurityConfig.java`.  More detail on that file appears later in this `README.md`
+
+# Future work
+
 Optionally, you might also have the following.  These are not yet implemented
 in this version of the code, but represent things we might add in future versions:
 
@@ -245,12 +249,10 @@ callback URL is different when running on Heroku.
    
 3. Carefully edit the `Client ID` and `Client Secret` into the `heroku.json` file.
 
-3. Run `./setHerokuEnv.py`
+3. Run `./setHerokuEnv.py --app appname`
+   * `appname` should be your app name on Heroku (without the `.herokuapp.com` part)
    * This is some Python code that reads from `heroku.json` and for each variable,
       runs the command `heroku config:set variable=value`
-   * Note that this command only works if the heroku command line has a notion of the
-      "current heroku app".  You might need to hack the Python file to add `--app appname`
-      (TODO: refactor the Python code to take appname as a command line parameter)
 
 4. As usual, set the heroku application name in the `pom.xml` (in the usual way).
 
@@ -267,7 +269,7 @@ callback URL is different when running on Heroku.
 
 <http://pconrad-webapps.github.io/topics/spring_boot_https/>
 
-
+# Details about a few other source code files
 
 ## `MyErrorController.java`
 
@@ -282,19 +284,6 @@ There are many other errors, and it would not be reasonable to create
 custom pages for each one.  (See, for example: <https://www.restapitutorial.com/httpstatuscodes.html>.   We may not even need that here, and it might
 be better to remove this from the tutorial to simplify it.  Maybe that goes
 better in its own tutorial.
-
-## `Pac4jConfig.java`
-
-This file does a lot of work; it probably violates the Single Responsibility Principle.    Here are a few things it does:
-
-* It gets the values of the `github_client_id and `github_client_secret` and
-   sets up the `GitHubClient` object used for OAuth Authentication.
-* It sets up the scope for the GitHubClient.
-* It sets up two custom roles, `admin` and `custom`
-* It sets up a custom function to decide what it means to be an `admin` user
-   which we've defined as "being an admin user in the `ucsb-cs56-f18` github
-   organization" (currently hard coded--that should be refactored)
-
 
 ## `SecurityConfig.java`
 
@@ -338,11 +327,11 @@ This file extends `WebMvcConfigurerAdapter`
 
 ## `SpringBootPac4jDemo.java`
 
-tbd
+This is the main for our app, and it looks pretty much like every other Spring Boot webapp main file
 
 ## `UserInterfaceApplication.java`
 
-tbd
+This is the `@Controller` and it just sets up the routes to the pages.
 
 # Useful resources:
 

@@ -144,7 +144,7 @@ public class CustomRoles {
 			logger.info("jr ="+ jr);				
 			logger.info("role ="+ role);
 
-			if (role.equals("member")) {
+			if (role.equals("member") || role.equals("admin") ) {
 				return true;
 			}
 				
