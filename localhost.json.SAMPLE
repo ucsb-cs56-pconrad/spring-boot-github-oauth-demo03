@@ -6,6 +6,6 @@
     "server.ssl.key-password":"password",
     "server.ssl.key-store":"classpath:KeyStore.jks",
     "server.ssl.key-store-type":"JKS",
-    "baseUrl":"https://localhost:8082",
+    "baseUrl":"https://127.0.0.1:8082",
     "salt":"fill-this-with-random-characters"
 }
