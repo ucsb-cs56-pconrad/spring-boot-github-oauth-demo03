@@ -1,0 +1,11 @@
+{
+    "github_client_id":"put-it-here",
+    "github_client_secret":"put-it-here",
+    "http.port":"8081",
+    "server.port":"8082",
+    "server.ssl.key-password":"password",
+    "server.ssl.key-store":"classpath:KeyStore.jks",
+    "server.ssl.key-store-type":"JKS",
+    "baseUrl":"https://localhost:8082",
+    "salt":"fill-this-with-random-characters"
+}

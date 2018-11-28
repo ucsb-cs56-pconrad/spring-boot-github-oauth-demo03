@@ -33,10 +33,7 @@ public class CustomAuthorizer extends ProfileAuthorizer<CommonProfile> {
 		// NOTE: THIS IS WHERE YOU hard code the criteria you want
 		// in terms of who is authorized to access your application
 		
-        return ( CustomAdmin.isMember(profile) ||
-				 CustomAdmin.isAdmin(profile) );
+        return ( CustomRoles.isMember(profile) ||
+				 CustomRoles.isAdmin(profile) );
     }
-
-
-	
 }

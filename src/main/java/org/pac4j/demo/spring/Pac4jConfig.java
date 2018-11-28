@@ -66,15 +66,15 @@ public class Pac4jConfig {
 		ghClient.setScope("read:org");
 
 		AuthorizationGenerator<GitHubProfile> authGen = (ctx, profile) -> {
-			if (CustomAdmin.isAdmin(profile)) {
-				profile.addRole(CustomAdmin.adminRoleName);
+			if (CustomRoles.isAdmin(profile)) {
+				profile.addRole(CustomRoles.adminRoleName);
 				logger.info("added role "
-							+ CustomAdmin.adminRoleName + " to pac4j profile");
+							+ CustomRoles.adminRoleName + " to pac4j profile");
 			}
-			if (CustomAdmin.isMember(profile)) {
-				profile.addRole(CustomAdmin.memberRoleName);
+			if (CustomRoles.isMember(profile)) {
+				profile.addRole(CustomRoles.memberRoleName);
 				logger.info("added role "
-							+ CustomAdmin.memberRoleName + " to pac4j profile");
+							+ CustomRoles.memberRoleName + " to pac4j profile");
 			}
 			return profile;
 		};
@@ -95,11 +95,11 @@ public class Pac4jConfig {
         final Config config = new Config(clients);
 		
 		RequireAnyRoleAuthorizer adminAuthorizer =
-			new RequireAnyRoleAuthorizer(CustomAdmin.adminRoleName);
+			new RequireAnyRoleAuthorizer(CustomRoles.adminRoleName);
 		config.addAuthorizer("admin",adminAuthorizer);
 
 		RequireAnyRoleAuthorizer memberAuthorizer =
-			new RequireAnyRoleAuthorizer(CustomAdmin.memberRoleName);
+			new RequireAnyRoleAuthorizer(CustomRoles.memberRoleName);
 		config.addAuthorizer("member",memberAuthorizer);
 
         return config;

@@ -12,18 +12,25 @@ import org.pac4j.core.profile.CommonProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CustomAdmin {
 
+/**
+   This class defines two custom roles, <code>adminRoleName</code>
+   and <code>memberRoleName</code>.
+
+ */
+public class CustomRoles {
+
+	// TODO: make the github_org_name a property set in the .json files
+	
 	public static final String github_org_name = "ucsb-cs56-f18";
 	public static final String adminRoleName = "ROLE_ADMIN";
 	public static final String memberRoleName = "ROLE_MEMBER";
 	private static Logger logger =
-		LoggerFactory.getLogger(CustomAdmin.class);
+		LoggerFactory.getLogger(CustomRoles.class);
 
 	/**
-	   isAdmin checks whether user is an admin in a certain
-	   hard coded github organization.   TODO: make that
-	   github org come from a configuration variable.
+	   isAdmin checks whether user is an admin in the
+	   designated github organization.
 	*/
 		
 	public static boolean isAdmin(CommonProfile profile) {

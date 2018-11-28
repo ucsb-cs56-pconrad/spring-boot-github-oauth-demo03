@@ -4,7 +4,8 @@
 # Don't store keystore files
 *.jks
 
-app.json
+localhost.json
+heroku.json
 secrets.json
 .classpath
 .project
