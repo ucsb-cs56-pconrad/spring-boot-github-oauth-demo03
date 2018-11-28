@@ -6,6 +6,95 @@ https://github.com/ucsb-cs56-pconrad/spring-boot-github-oauth-demo01
 
 Both the code and the explanation in the README.md are cleaned up a bit.
 
+# Configuring the application
+
+The configuration steps need to be followed VERY CAREFULLY or it will not work.
+
+
+## Running on localhost with https
+
+1. If you want to be able to test on localhost with https, configure the key store.  
+   * This is a self-signed certificate, and does NOT offer security; it is only for testing purposes
+   * When running with `https` with a self-signed certificate, you will
+      likely get browser warnings that the site may be unsafe.  It is ok
+      to proceed to the site in spite of these warnings.
+   * Run this, noting how to respond to the prompts below:
+      ```
+      cd src/main/resources
+      keytool -genkey -alias mydomain -keyalg RSA -keystore KeyStore.jks -keysize 2048
+      ```
+      * Use `password` as the password (or else change the hardcoded value `password` in the file `src/main/resources/application.properties`
+
+      * For all the other values, you can just take the defaults (except you have to answer "yes" to the question where it asks you if the values are correct.)
+
+2. Copy the file `localhost.json.SAMPLE` to `localhost.json`
+   * Double check that `localhost.json` is in your `.gitignore` file.  The reason
+       there is a `localhost.json.SAMPLE` that does NOT have real client secrets in it
+       is so that these won't accidentally leak to being stored in a github repo.
+   * In the next step, you'll edit the values in this file.
+
+2. Create a Github OAuth app to get the client-id and client-secret values, and put those values into `localhost.json`.  To create a Github OAuth app:
+   * Login to Github, and go to Settings under your personal account
+   * Navigate to Developer Settings (Or just go to: <https://github.com/settings/developers>)
+   * Click the "New OAuth App" button
+   * Give the app a name that matches your repo name, plus "test on localhost" (for example `GauchoTool test on localhost`).  It is not required that this name match exactly, but you will *want to be able to find it later* to be sure that you are debugging the settings of the correct app
+   * For `Homepage URL` enter `https://127.0.0.1:8082`
+   * For `Application description`, you may put in anything you want.
+   * For `Authorization callback URL` you must put in this.  Be sure it matches *exactly*, including upper/lower case: `https://127.0.0.1:8082/callback?client_name=GitHubClient`
+   * Click `Register Application`
+   * Now you have the `Client ID` and `Client Secret` values you need for the next step.
+   
+3. Carefully edit the `Client ID` and `Client Secret` into the `localhost.json` file.
+
+3. Run `. env.sh`
+   * This defines the environment variable `SPRING_APPLICATION_JSON` which is
+      an environment variable that can override application setting values
+      in the `src/main/resources/application.properties` file.
+
+4. Run `mvn spring-boot:run`
+
+
+## Running on Heroku
+
+To run on heroku, you need to create a DIFFERENT OAuth app.  That's because the
+callback URL is different when running on Heroku.
+
+1. Create a heroku application.  You can do this with the Heroku Dashboard online,
+   or by doing `heroku login` and then `heroku create app-name`.
+
+   If you choose `app-name`, then your app's url will be `https://app-name.herokuapp.com`
+
+   You'll need that URL below.  Everywhere you see `app-name.herokuapp.com` in these
+   insructions,
+   you must substitutee your actual
+   application's name.
+   
+2. Copy the file `heroku.json.SAMPLE` to `heroku.json`
+   * Double check that `heroku.json` is in your `.gitignore` file.
+
+2. Create a separate Github OAuth app to get the client-id and client-secret values, and put those values into `heroku.json`.  To create a Github OAuth app:
+   * Login to Github, and go to Settings under your personal account
+   * Navigate to Developer Settings (Or just go to: <https://github.com/settings/developers>)
+   * Click the "New OAuth App" button
+   * Give the app a name that matches your repo name, plus "on heroku" (for example `GauchoTool test on localhost`).  It is not required that this name match exactly, but you will *want to be able to find it later* to be sure that you are debugging the settings of the correct app
+   * For `Homepage URL` enter `https://app-name.herokuapp.com` (substituting your REAL app name.)
+   * For `Application description`, you may put in anything you want.
+   * For `Authorization callback URL` you must put in this.  Be sure it matches *exactly*, including upper/lower case: `https://app-name.herokuapp.com/callback?client_name=GitHubClient`
+   * Click `Register Application`
+   * Now you have the `Client ID` and `Client Secret` values you need for the next step.
+   
+3. Carefully edit the `Client ID` and `Client Secret` into the `heroku.json` file.
+
+3. Run `./setHerokuEnv.py --app appname`
+   * `appname` should be your app name on Heroku (without the `.herokuapp.com` part)
+   * This is some Python code that reads from `heroku.json` and for each variable,
+      runs the command `heroku config:set variable=value`
+
+4. As usual, set the heroku application name in the `pom.xml` (in the usual way).
+
+5. Run `mvn heroku:deploy`
+
+
 # What is this?
 
 This is a demo of an application that illustrates github OAuth with
@@ -170,93 +259,6 @@ in this version of the code, but represent things we might add in future version
 Now, let's walk through the details.
 
 
-# Configuring the application
-
-The configuration steps need to be followed VERY CAREFULLY or it will not work.
-
-
-## Running on localhost with https
-
-1. If you want to be able to test on localhost with https, configure the key store.  
-   * This is a self-signed certificate, and does NOT offer security; it is only for testing purposes
-   * When running with `https` with a self-signed certificate, you will
-      likely get browser warnings that the site may be unsafe.  It is ok
-      to proceed to the site in spite of these warnings.
-   * Run this, noting how to respond to the prompts below:
-      ```
-      cd src/main/resources
-      keytool -genkey -alias mydomain -keyalg RSA -keystore KeyStore.jks -keysize 2048
-      ```
-      * Use `password` as the password (or else change the hardcoded value `password` in the file `src/main/resources/application.properties`
-
-      * For all the other values, you can just take the defaults (except you have to answer "yes" to the question where it asks you if the values are correct.)
-
-2. Copy the file `localhost.json.SAMPLE` to `localhost.json`
-   * Double check that `localhost.json` is in your `.gitignore` file.  The reason
-       there is a `localhost.json.SAMPLE` that does NOT have real client secrets in it
-       is so that these won't accidentally leak to being stored in a github repo.
-   * In the next step, you'll edit the values in this file.
-
-2. Create a Github OAuth app to get the client-id and client-secret values, and put those values into `localhost.json`.  To create a Github OAuth app:
-   * Login to Github, and go to Settings under your personal account
-   * Navigate to Developer Settings (Or just go to: <https://github.com/settings/developers>)
-   * Click the "New OAuth App" button
-   * Give the app a name that matches your repo name, plus "test on localhost" (for example `GauchoTool test on localhost`).  It is not required that this name match exactly, but you will *want to be able to find it later* to be sure that you are debugging the settings of the correct app
-   * For `Homepage URL` enter `https://127.0.0.1:8082`
-   * For `Application description`, you may put in anything you want.
-   * For `Authorization callback URL` you must put in this.  Be sure it matches *exactly*, including upper/lower case: `https://127.0.0.1:8082/callback?client_name=GitHubClient`
-   * Click `Register Application`
-   * Now you have the `Client ID` and `Client Secret` values you need for the next step.
-   
-3. Carefully edit the `Client ID` and `Client Secret` into the `localhost.json` file.
-
-3. Run `. env.sh`
-   * This defines the environment variable `SPRING_APPLICATION_JSON` which is
-      an environment variable that can override application setting values
-      in the `src/main/resources/application.properties` file.
-
-4. Run `mvn spring-boot:run`
-
-
-## Running on Heroku
-
-To run on heroku, you need to create a DIFFERENT OAuth app.  That's because the
-callback URL is different when running on Heroku.
-
-1. Create a heroku application.  You can do this with the Heroku Dashboard online,
-   or by doing `heroku login` and then `heroku create app-name`.
-
-   If you choose `app-name`, then your app's url will be `https://app-name.herokuapp.com`
-
-   You'll need that URL below.  Everywhere you see `app-name.herokuapp.com` in these
-   insructions,
-   you must substitutee your actual
-   application's name.
-   
-2. Copy the file `heroku.json.SAMPLE` to `heroku.json`
-   * Double check that `heroku.json` is in your `.gitignore` file.
-
-2. Create a separate Github OAuth app to get the client-id and client-secret values, and put those values into `heroku.json`.  To create a Github OAuth app:
-   * Login to Github, and go to Settings under your personal account
-   * Navigate to Developer Settings (Or just go to: <https://github.com/settings/developers>)
-   * Click the "New OAuth App" button
-   * Give the app a name that matches your repo name, plus "on heroku" (for example `GauchoTool test on localhost`).  It is not required that this name match exactly, but you will *want to be able to find it later* to be sure that you are debugging the settings of the correct app
-   * For `Homepage URL` enter `https://app-name.herokuapp.com` (substituting your REAL app name.)
-   * For `Application description`, you may put in anything you want.
-   * For `Authorization callback URL` you must put in this.  Be sure it matches *exactly*, including upper/lower case: `https://app-name.herokuapp.com/callback?client_name=GitHubClient`
-   * Click `Register Application`
-   * Now you have the `Client ID` and `Client Secret` values you need for the next step.
-   
-3. Carefully edit the `Client ID` and `Client Secret` into the `heroku.json` file.
-
-3. Run `./setHerokuEnv.py --app appname`
-   * `appname` should be your app name on Heroku (without the `.herokuapp.com` part)
-   * This is some Python code that reads from `heroku.json` and for each variable,
-      runs the command `heroku config:set variable=value`
-
-4. As usual, set the heroku application name in the `pom.xml` (in the usual way).
-
-5. Run `mvn heroku:deploy`
 
 
 # Based on code from:
