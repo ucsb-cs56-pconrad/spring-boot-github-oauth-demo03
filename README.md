@@ -7,7 +7,14 @@ https://github.com/ucsb-cs56-pconrad/spring-boot-github-oauth-demo02
 In this version, we take on some of the "TODO" items from demo02, including:
 
 * Adding an application property for the he designated github org that defines privlege levels (instead of it being hard coded in the sy`CustomRoles.java` file.
-* TODO: Add more things to this list as they are finished.
+rsions:
+* Code to put a login/logout button in your navigation bar
+* Code to put the username and user's avatar in your navigation bar
+* Code to put an indication of the user's level of access in your navigation bar
+* Code so that when showing the user various links to pages, we hide the links
+  (or grey them out) if the user is not authorized for that function of the app
+
+Now, let's walk through the details.
 
 # Configuring the application
 
@@ -253,18 +260,7 @@ But there are some things you DO have to do.
 
    This is done in the file `SecurityConfig.java`.  More detail on that file appears later in this `README.md`
 
-# Future work
 
-Optionally, you might also have the following.  These are not yet implemented
-in this version of the code, but represent things we might add in future versions:
-
-* Code to put a login/logout button in your navigation bar
-* Code to put the username and user's avatar in your navigation bar
-* Code to put an indication of the user's level of access in your navigation bar
-* Code so that when showing the user various links to pages, we hide the links
-  (or grey them out) if the user is not authorized for that function of the app
-
-Now, let's walk through the details.
 
 
 
