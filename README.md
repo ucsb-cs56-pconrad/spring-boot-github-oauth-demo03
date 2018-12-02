@@ -2,9 +2,12 @@
 
 This is a refactored version of code from:
 
-https://github.com/ucsb-cs56-pconrad/spring-boot-github-oauth-demo01
+https://github.com/ucsb-cs56-pconrad/spring-boot-github-oauth-demo02
 
-Both the code and the explanation in the README.md are cleaned up a bit.
+In this version, we take on some of the "TODO" items from demo02, including:
+
+* Adding an application property for the he designated github org that defines privlege levels (instead of it being hard coded in the sy`CustomRoles.java` file.
+* TODO: Add more things to this list as they are finished.
 
 # Configuring the application
 
