@@ -1,4 +1,4 @@
-# spring-boot-oauth-demo02
+# spring-boot-oauth-demo03
 
 This is a refactored version of code from:
 
