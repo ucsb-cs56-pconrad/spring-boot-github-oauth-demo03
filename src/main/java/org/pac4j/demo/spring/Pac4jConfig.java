@@ -38,6 +38,15 @@ import org.pac4j.core.profile.CommonProfile;
 public class Pac4jConfig {
 
 	private static Logger logger = LoggerFactory.getLogger(Pac4jConfig.class);
+
+	public static Pac4jConfig DEFAULT = null;
+
+	public Pac4jConfig () {
+		if (DEFAULT==null)
+			DEFAULT = this;
+		else
+			throw new IllegalStateException("Pac4jConfig initialized twice");
+	}
 	
     @Value("${salt}")
     private String salt;
@@ -51,7 +60,10 @@ public class Pac4jConfig {
     @Value("${github_client_secret}")
     private String github_client_secret;
 
+	@Value("${app_github_org}")
+	private String app_github_org;
 
+	public String getGithubOrg() { return app_github_org; }
 	
     @Bean
     public Config config() {
@@ -61,17 +73,19 @@ public class Pac4jConfig {
 
 		logger.info("github_client_id ="+ github_client_id);
 		logger.info("github_client_secret ="+ github_client_secret);
+		logger.info("app_github_org ="+ app_github_org);
 		
 		// https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/
 		ghClient.setScope("read:org");
 
 		AuthorizationGenerator<GitHubProfile> authGen = (ctx, profile) -> {
-			if (CustomRoles.isAdmin(profile)) {
+			CustomRoles cr = new CustomRoles();
+			if (cr.isAdmin(profile)) {
 				profile.addRole(CustomRoles.adminRoleName);
 				logger.info("added role "
 							+ CustomRoles.adminRoleName + " to pac4j profile");
 			}
-			if (CustomRoles.isMember(profile)) {
+			if (cr.isMember(profile)) {
 				profile.addRole(CustomRoles.memberRoleName);
 				logger.info("added role "
 							+ CustomRoles.memberRoleName + " to pac4j profile");

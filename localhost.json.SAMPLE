@@ -1,6 +1,7 @@
 {
     "github_client_id":"put-it-here",
     "github_client_secret":"put-it-here",
+    "app_github_org":"ucsb-cs56-f18",
     "http.port":"8081",
     "server.port":"8082",
     "server.ssl.key-password":"password",
