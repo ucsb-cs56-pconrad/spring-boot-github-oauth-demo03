@@ -181,6 +181,10 @@ But there are some things you DO have to do.
     then you need to create a github organization.  You do this by selecting the
     `New Organization` button from the dropdown menu (you can also just visit:
     <https://github.com/organizations/new>.)    
+    
+    NOTE: You need to remove third-party restrictions in order for this to work (or else figure out how to authorize
+    your specific application).  Go to <https://github.com/organizations/ORG-NAME-HERE/settings/oauth_application_policy>,
+    substituting your organization's name in place of `ORG-NAME-HERE`
 
 ## The code you need (examples in this repo)
 
