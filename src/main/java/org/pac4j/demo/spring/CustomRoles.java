@@ -1,5 +1,9 @@
 package org.pac4j.demo.spring;
 
+import org.springframework.core.env.Environment;
+
+import org.pac4j.core.config.Config;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.jcabi.github.Coordinates;
 import com.jcabi.github.Github;
 import com.jcabi.github.Organization;
@@ -11,34 +15,50 @@ import com.jcabi.http.response.JsonResponse;
 import org.pac4j.core.profile.CommonProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
    This class defines two custom roles, <code>adminRoleName</code>
    and <code>memberRoleName</code>.
 
  */
+
+
 public class CustomRoles {
 
-	// TODO: make the github_org_name a property set in the .json files
+	private String	github_org = Pac4jConfig.DEFAULT.getGithubOrg();
 	
-	public static final String github_org_name = "ucsb-cs56-f18";
+	private Logger logger = LoggerFactory.getLogger(CustomRoles.class);
+	
 	public static final String adminRoleName = "ROLE_ADMIN";
 	public static final String memberRoleName = "ROLE_MEMBER";
-	private static Logger logger =
-		LoggerFactory.getLogger(CustomRoles.class);
+
 
 	/**
 	   isAdmin checks whether user is an admin in the
 	   designated github organization.
 	*/
 		
-	public static boolean isAdmin(CommonProfile profile) {
+	public boolean isAdmin(CommonProfile profile) {
+
 		String oauth_token = (String) profile.getAttribute("access_token");
 		String user = (String) profile.getAttribute("login");
 
 		logger.info("oauth_token="+oauth_token);
 		logger.info("user="+user);
+		for (int i=0; i<10; i++) {
+			logger.info("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+		}
+		logger.info("github_org="+github_org);
 			
 		Github github=null;
 			
@@ -64,12 +84,12 @@ public class CustomRoles {
 				
 			logger.info("jruser ="+ jruser);
 
-			Organization org = github.organizations().get(github_org_name);
+			Organization org = github.organizations().get(github_org);
 
 			logger.info("org ="+ org);
 				
 			JsonResponse jr = github.entry()
-				.uri().path("/user/memberships/orgs/" + github_org_name)
+				.uri().path("/user/memberships/orgs/" + github_org)
 				.back()
 				.method(Request.GET)
 				.fetch()
@@ -97,7 +117,7 @@ public class CustomRoles {
 	   Is the user a member of the organization? (But not an admin)
 	 */
 	
-	public static boolean isMember(CommonProfile profile) {
+	public boolean isMember(CommonProfile profile) {
 		String oauth_token = (String) profile.getAttribute("access_token");
 		String user = (String) profile.getAttribute("login");
 
@@ -128,12 +148,12 @@ public class CustomRoles {
 				
 			logger.info("jruser ="+ jruser);
 
-			Organization org = github.organizations().get(github_org_name);
+			Organization org = github.organizations().get(github_org);
 
 			logger.info("org ="+ org);
 				
 			JsonResponse jr = github.entry()
-				.uri().path("/user/memberships/orgs/" + github_org_name)
+				.uri().path("/user/memberships/orgs/" + github_org)
 				.back()
 				.method(Request.GET)
 				.fetch()
